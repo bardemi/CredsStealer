@@ -1,5 +1,5 @@
 # CredsStealer
-Get location of victim using windows service and send it to attacker.
+CredsStealer allows an attacker to craft a highly convincing credentials prompt using Windows PromptForCredential, validate it against the DC or localmachine and in turn leak it via an HTTP request.
 
 # How to run
 ```
