@@ -63,7 +63,7 @@ void spoof() {
 	} while (loginStatus == FALSE);
 }
 
-int main()
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 	spoof();
 	return 0;
